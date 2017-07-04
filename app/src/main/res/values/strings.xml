@@ -1,0 +1,6 @@
+<resources>
+
+    <string name="app_name">SMS Receiver 006</string>
+    <string name="sms_message"> %1$s<br/>%2$s</string>
+
+</resources>

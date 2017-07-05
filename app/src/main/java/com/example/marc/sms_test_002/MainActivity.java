@@ -1,6 +1,7 @@
 package com.example.marc.sms_test_002;
 
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 
 import android.Manifest;
 import android.app.Activity;
@@ -21,7 +22,7 @@ import android.util.Log;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import java.text.SimpleDateFormat;
+
 
 public class MainActivity extends Activity {
 

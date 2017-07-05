@@ -15,11 +15,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import java.text.SimpleDateFormat;
 
 public class MainActivity extends Activity {
 
@@ -32,7 +34,7 @@ public class MainActivity extends Activity {
     private ArrayAdapter<String> adapter;
     Boolean permission = false;
     public static final int MY_PERMISSIONS_REQUEST_RECEIVE_SMS = 99;
-
+    int NumMessages = 0;
     public static MainActivity instance() {
         return activity;
     }
@@ -59,7 +61,6 @@ public class MainActivity extends Activity {
         activity = this;
     }
 
-
     public void readSMS() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             permission = checkSmsPermission();
@@ -72,20 +73,30 @@ public class MainActivity extends Activity {
 
             int senderIndex = smsInboxCursor.getColumnIndex("address");
             int messageIndex = smsInboxCursor.getColumnIndex("body");
+            int smsDateIndex = smsInboxCursor.getColumnIndex("date");
+            long dateLong;
 
             if (messageIndex < 0 || !smsInboxCursor.moveToFirst()) return;
-
             adapter.clear();
-
             do {
-
                 String sender = smsInboxCursor.getString(senderIndex);
                 String message = smsInboxCursor.getString(messageIndex);
-
-                String formattedText = String.format(getResources().getString(R.string.sms_message), sender, message);
-
+                String smsDate = smsInboxCursor.getString(smsDateIndex);
+                //TextView tv2 = (TextView) findViewById(R.id.textView2);
+                //tv2.setText(Integer.toString(senderIndex));
+                //TextView tv3 = (TextView) findViewById(R.id.textView3);
+                //tv3.setText(Integer.toString(messageIndex));
+                //String formattedText = String.format(getResources().getString(R.string.sms_message), sender, message);
+                long itemLong = Long.parseLong(smsDate);
+                java.util.Date d = new java.util.Date(itemLong);
+                String itemDateStr = new SimpleDateFormat("dd-MMM HH:mm:ss").format(d);
+                String formattedText = String.format("%s<br/>%s<br/>%s", sender, itemDateStr, message);
                 adapter.add(Html.fromHtml(formattedText).toString());
+                NumMessages += 1;
             } while (smsInboxCursor.moveToNext());
+            TextView tv1 = (TextView) findViewById(R.id.textView1);
+            tv1.setText(Integer.toString(NumMessages) + " SMS messages");
+
         }
     }
 

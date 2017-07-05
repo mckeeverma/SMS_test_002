@@ -1,6 +1,8 @@
 <resources>
 
-    <string name="app_name">SMS Receiver 006</string>
-    <string name="sms_message"> %1$s<br/>%2$s</string>
+    <string name="app_name">SMS Receiver 008</string>
+    <!--
+    <string name="sms_message">%1$s\n%2$s</string>
+    -->
 
 </resources>
